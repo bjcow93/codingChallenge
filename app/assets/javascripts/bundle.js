@@ -386,6 +386,7 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Activated on: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.activated_on)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "users"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Deactivated on: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.deactivated_on || 'Still Active')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "delete-button",
           id: user.id,
           onClick: _this5.handleDelete
         }, "Delete User"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
@@ -407,7 +408,8 @@ function (_React$Component) {
         onChange: this.update('deactivated_on')
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
-        value: "Create New User" // className="create-submit-button"
+        value: "Create New User",
+        className: "create-button" // className="create-submit-button"
 
       }))));
     }

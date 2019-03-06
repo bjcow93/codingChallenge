@@ -120,7 +120,7 @@ class CustomerPage extends React.Component {
             <h3>Deactivated on: </h3>
             <p>{user.deactivated_on || 'Still Active'}</p>
           </div>
-          <button id={user.id} onClick={this.handleDelete}>Delete User</button>
+          <button className="delete-button" id={user.id} onClick={this.handleDelete}>Delete User</button>
           <br/>
           <br/>
         </section>
@@ -158,6 +158,7 @@ class CustomerPage extends React.Component {
         <input
           type="submit"
           value="Create New User"
+          className="create-button"
           // className="create-submit-button"
         />
        </form>
