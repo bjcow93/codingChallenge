@@ -1,0 +1,65 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+body div {
+  height: 100%;
+}
+
+main {
+  height: 100%;
+}
+
+.splash-page {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.customer-button {
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  color: white;
+  background-color: rgb(27, 161, 116);
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  transition: transform .3s ease-in-out, background-color .2s ease-in-out, box-shadow .3s ease-in-out;
+  font-size: 30px;
+}
+
+.customer-button:hover {
+  transform: translate3d(0px, -1px, 0px);
+  background: rgb(18, 104, 75);
+  cursor: pointer;
+  box-shadow: 0px 2px 2px .1px rgb(207, 207, 207);
+}
+
+.user-section .users {
+  display: flex;
+  align-items: center;
+}
+
+.user-section h3 {
+  margin-right: 10px;
+}
+
+.new-user-form div {
+  display: flex;
+  align-items: center;
+}
+
+.new-user-form h3 {
+  margin-right: 10px;
+}
+
+.new-user-form input {
+  height: 20px;
+}

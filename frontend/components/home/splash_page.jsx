@@ -16,8 +16,8 @@ class SplashPage extends React.Component {
   render() {
     // debugger
     return (
-    <div>
-        <button className="backing-button" onClick={this.handleClick}>Go to customer's page</button>
+    <div className="splash-page">
+        <button className="customer-button" onClick={this.handleClick}>Go to customer's page</button>
     </div>)
   }
 }

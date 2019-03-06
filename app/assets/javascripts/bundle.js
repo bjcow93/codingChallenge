@@ -376,8 +376,9 @@ function (_React$Component) {
           sub_plan = _this$props.sub_plan,
           month = _this$props.month;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Subscription Plan: ", sub_plan.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Users for ", this.props.customer.name), this.props.users.map(function (user, i) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: i
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+          key: i,
+          className: "user-section"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "users"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, user.name)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -388,24 +389,19 @@ function (_React$Component) {
           id: user.id,
           onClick: _this5.handleDelete
         }, "Delete User"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "TOTAL BILL = $", this.billFor(month, sub_plan, users)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "TOTAL BILL = $", this.billFor(month, sub_plan, users)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Add more users (this may change total Bill, depending on new users' dates):"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "new-user-form",
         onSubmit: this.handleSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Name: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Name: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: name,
         onChange: this.update('name'),
         placeholder: "Choose a name"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Activated on: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Activated on: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "date",
         value: activated_on,
         onChange: this.update('activated_on')
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "input"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Deactivated on: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Deactivated on: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "date",
         value: deactivated_on,
         onChange: this.update('deactivated_on')
@@ -532,8 +528,10 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       // debugger
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "backing-button",
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "splash-page"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "customer-button",
         onClick: this.handleClick
       }, "Go to customer's page"));
     }

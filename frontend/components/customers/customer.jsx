@@ -108,7 +108,7 @@ class CustomerPage extends React.Component {
       <h1>Subscription Plan: {sub_plan.name}</h1>
       <h1>Users for {this.props.customer.name}</h1>
       {this.props.users.map((user, i) => (
-        <div key={i}>
+        <section key={i} className="user-section">
           <div className="users">
             <h2>{user.name}</h2>
           </div>
@@ -123,13 +123,14 @@ class CustomerPage extends React.Component {
           <button id={user.id} onClick={this.handleDelete}>Delete User</button>
           <br/>
           <br/>
-        </div>
+        </section>
       ))}
       <h1>TOTAL BILL = ${this.billFor(month, sub_plan, users)}</h1>
 
+        <section>
+        <h2>Add more users (this may change total Bill, depending on new users' dates):</h2>
+       <form className="new-user-form" onSubmit={this.handleSubmit}>
         <div>
-       <form onSubmit={this.handleSubmit}>
-        <div className="input">
           <h3>Name: </h3>
             <input
               type="text"
@@ -138,7 +139,7 @@ class CustomerPage extends React.Component {
               placeholder="Choose a name"
             />
           </div>
-        <div className="input">
+        <div>
           <h3>Activated on: </h3>
           <input 
             type="date"
@@ -146,7 +147,7 @@ class CustomerPage extends React.Component {
             onChange={this.update('activated_on')}
             />
         </div>
-        <div className="input">
+        <div>
           <h3>Deactivated on: </h3>
           <input
             type="date"
@@ -160,7 +161,7 @@ class CustomerPage extends React.Component {
           // className="create-submit-button"
         />
        </form>
-        </div>
+        </section>
       {/* <button className="backing-button" onClick={this.incrementCount}>Add another user</button> */}
     </div>)
   }
