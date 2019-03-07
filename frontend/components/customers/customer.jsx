@@ -114,9 +114,9 @@ class CustomerPage extends React.Component {
     if (!this.props.customer) return <div></div>;
     const { name, activated_on, deactivated_on, month } = this.state;
     const {customer, users, subscription, sub_plan} = this.props;
-
+    // debugger
     return (<div>
-      <h1>Subscription Plan: {sub_plan.name}</h1>
+      <h1>Subscription Plan: {sub_plan.name} {subscription ? `(${subscription.started_on})` : '(no subscriptions)'}</h1>
       <h1>Active users for {this.props.customer.name} during {month ? month : '2019-01'}</h1>
       <form onSubmit={this.handleMonth}>
         <div>Change month: </div>

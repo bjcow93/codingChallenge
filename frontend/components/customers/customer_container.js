@@ -8,7 +8,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     customer: state.data.customer,
     users: state.data.users,
-    subscription: state.data.subscriptions,
+    subscription: state.data.subscription,
     sub_plan: state.data.sub_plan,
     month: state.data.month
   };

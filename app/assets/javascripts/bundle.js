@@ -385,8 +385,9 @@ function (_React$Component) {
           customer = _this$props.customer,
           users = _this$props.users,
           subscription = _this$props.subscription,
-          sub_plan = _this$props.sub_plan;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Subscription Plan: ", sub_plan.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Active users for ", this.props.customer.name, " during ", month ? month : '2019-01'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+          sub_plan = _this$props.sub_plan; // debugger
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Subscription Plan: ", sub_plan.name, " ", subscription ? "(".concat(subscription.started_on, ")") : '(no subscriptions)'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Active users for ", this.props.customer.name, " during ", month ? month : '2019-01'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleMonth
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Change month: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -465,7 +466,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
     customer: state.data.customer,
     users: state.data.users,
-    subscription: state.data.subscriptions,
+    subscription: state.data.subscription,
     sub_plan: state.data.sub_plan,
     month: state.data.month
   };
