@@ -387,7 +387,7 @@ function (_React$Component) {
           subscription = _this$props.subscription,
           sub_plan = _this$props.sub_plan; // debugger
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "TOTAL BILL = $", this.state.bill), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Subscription Plan: ", sub_plan.name, " ", subscription ? "(".concat(subscription.started_on, ")") : '(no subscriptions)'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Active users for ", this.props.customer.name, " during ", month ? month : '2019-01'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "TOTAL BILL = $", this.state.bill), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Subscription Plan: ", sub_plan.name, " ", subscription ? "(".concat(subscription.started_on, ")") : '(no subscriptions)'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleMonth
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Change month: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -398,7 +398,7 @@ function (_React$Component) {
         type: "submit",
         value: "Change month:",
         className: "create-button"
-      })), this.props.users.map(function (user, i) {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Active users for ", this.props.customer.name, " during ", month ? month : '2019-01'), this.props.users.map(function (user, i) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           key: i,
           className: "user-section"

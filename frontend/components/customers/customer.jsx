@@ -119,7 +119,6 @@ class CustomerPage extends React.Component {
       <h1>TOTAL BILL = ${this.state.bill}</h1>
       <br/>
       <h1>Subscription Plan: {sub_plan.name} {subscription ? `(${subscription.started_on})` : '(no subscriptions)'}</h1>
-      <h1>Active users for {this.props.customer.name} during {month ? month : '2019-01'}</h1>
       <form onSubmit={this.handleMonth}>
         <div>Change month: </div>
         <input
@@ -135,7 +134,8 @@ class CustomerPage extends React.Component {
           className="create-button"
         />
       </form>
-
+      <br/>
+      <h1>Active users for {this.props.customer.name} during {month ? month : '2019-01'}</h1>
       {this.props.users.map((user, i) => (
         <section key={i} className="user-section">
           <div className="users">
