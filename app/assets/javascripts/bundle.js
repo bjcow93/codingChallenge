@@ -532,7 +532,7 @@ function (_React$Component) {
       // debugger
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "splash-page"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Coding Challenge Demo"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "customer-button",
         onClick: this.handleClick
       }, "Go to customer's page"));
