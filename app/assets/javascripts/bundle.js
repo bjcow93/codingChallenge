@@ -413,7 +413,7 @@ function (_React$Component) {
           id: user.id,
           onClick: _this6.handleDelete
         }, "Delete User"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Add more users (this may change total Bill, depending on new users' dates):"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "TOTAL BILL = $", this.state.bill), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Add more users (this may change total Bill, depending on new users' dates):"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "new-user-form",
         onSubmit: this.handleSubmit
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Name: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {

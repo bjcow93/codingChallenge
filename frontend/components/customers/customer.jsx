@@ -154,7 +154,7 @@ class CustomerPage extends React.Component {
           <br/>
         </section>
       ))}
-      {/* <h1>TOTAL BILL = ${this.state.bill}</h1> */}
+      <h1>TOTAL BILL = ${this.state.bill}</h1>
 
         <section>
         <h2>Add more users (this may change total Bill, depending on new users' dates):</h2>
