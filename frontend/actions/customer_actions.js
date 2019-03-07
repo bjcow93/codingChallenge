@@ -8,8 +8,8 @@ export const receiveCustomer = payload => ({
   payload,
 });
 
-export const fetchCustomer = (id) => (dispatch) => {
-  return APIUtil.fetchCustomer(id).then(customer => {
+export const fetchCustomer = (id, month) => (dispatch) => {
+  return APIUtil.fetchCustomer(id, month).then(customer => {
     dispatch(receiveCustomer(customer));
   });
 };

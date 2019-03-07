@@ -4,14 +4,12 @@ import { RECEIVE_CUSTOMER } from '../actions/customer_actions';
 const customersReducer = (state = {}, action) => {
   Object.freeze(state);
 
-  let customer;
+  let data;
 
   switch (action.type) {
     case RECEIVE_CUSTOMER:
-    // debugger
-      customer = action.payload;
-      // return merge({}, state, { [customer.id]: customer });
-      return action.payload;
+    data = action.payload;
+      return data;
     default:
       return state;
   }

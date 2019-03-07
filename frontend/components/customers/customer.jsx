@@ -8,24 +8,33 @@ class CustomerPage extends React.Component {
       name: '',
       activated_on: '',
       deactivated_on: '',
-      month: '2019-01-01'
+      month: '',
+      bill: 0
     };
 
     this.handleDelete = this.handleDelete.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.billFor = this.billFor.bind(this);
+    this.handleMonth = this.handleMonth.bind(this);
   }
+
 
   componentDidMount() {
-    this.props.fetchCustomer(this.props.match.params.customerId);
+    this.props.fetchCustomer(this.props.match.params.customerId).then(
+      () => {
+        this.setState({
+          bill: this.billFor(this.props.month, this.props.sub_plan, this.props.users)
+        });
+      }
+    );
   }
 
-  componentDidUpdate(prevProps) {
-    if (!prevProps.users) return;
-    if (prevProps.users.length != this.props.users.length) {
-      this.props.fetchCustomer(this.props.match.params.customerId);
+  componentDidUpdate(newProps) {
+    if (this.props.users != newProps.users) {
+      this.setState({
+        bill: this.billFor(this.props.month, this.props.sub_plan, this.props.users)
+      });
     }
-    // window.scrollTo(0, 0);
   }
 
   handleDelete(e) {
@@ -57,9 +66,15 @@ class CustomerPage extends React.Component {
 
     this.props.createUser(formData).then(
       () => {
-        this.props.fetchCustomer(this.props.customer.id);
+        this.props.fetchCustomer(this.props.customer.id, this.state.month);
       }
     );
+  }
+
+  handleMonth() {
+    let month = this.state.month;
+    let customer_id = this.props.customer.id;
+    this.props.fetchCustomer(customer_id, month);
   }
 
   billFor(month, activeSubscription, users) {
@@ -76,19 +91,15 @@ class CustomerPage extends React.Component {
     }
 
     month = month += "-02"
-    // debugger
-    var oneDay = 24 * 60 * 60 * 1000;
+    var oneDay = 86400000;
     var firstDate = firstDayOfMonth(new Date(month));
     var lastDate = lastDayOfMonth(new Date(month));
-    var numDaysInMonth = (lastDate - firstDate) / oneDay + 1
-    var dailyRate = activeSubscription.monthly_price_in_dollars / numDaysInMonth;
-    // debugger
+    var numDaysInMonth = Math.floor((lastDate - firstDate) / oneDay) + 1;
+    var dailyRate = activeSubscription.monthly_price_in_dollars ? activeSubscription.monthly_price_in_dollars / numDaysInMonth : 0;
     var totalBill = 0;
-
     var date = firstDate;
     while (date <= lastDate) {
       users.forEach(user => {
-        // debugger
         if (new Date(user.activated_on) <= date && (user.deactivated_on == null || new Date(user.deactivated_on) > date)) {
           totalBill += dailyRate;
         }
@@ -101,12 +112,27 @@ class CustomerPage extends React.Component {
 
   render() {
     if (!this.props.customer) return <div></div>;
-    const { name, activated_on, deactivated_on } = this.state;
-    const {customer, users, subscription, sub_plan, month} = this.props;
+    const { name, activated_on, deactivated_on, month } = this.state;
+    const {customer, users, subscription, sub_plan} = this.props;
 
     return (<div>
       <h1>Subscription Plan: {sub_plan.name}</h1>
-      <h1>Users for {this.props.customer.name}</h1>
+      <h1>Active users for {this.props.customer.name} during {month ? month : '2019-01'}</h1>
+      <form onSubmit={this.handleMonth}>
+        <div>Change month: </div>
+        <input
+          type="text"
+          value={month}
+          onChange={this.update('month')}
+          placeholder="ex: 2019-02"
+
+        />
+        <input
+          type="submit"
+          value="Change month:"
+          className="create-button"
+        />
+      </form>
       {this.props.users.map((user, i) => (
         <section key={i} className="user-section">
           <div className="users">
@@ -125,7 +151,7 @@ class CustomerPage extends React.Component {
           <br/>
         </section>
       ))}
-      <h1>TOTAL BILL = ${this.billFor(month, sub_plan, users)}</h1>
+      <h1>TOTAL BILL = ${this.state.bill}</h1>
 
         <section>
         <h2>Add more users (this may change total Bill, depending on new users' dates):</h2>
@@ -159,11 +185,9 @@ class CustomerPage extends React.Component {
           type="submit"
           value="Create New User"
           className="create-button"
-          // className="create-submit-button"
         />
        </form>
         </section>
-      {/* <button className="backing-button" onClick={this.incrementCount}>Add another user</button> */}
     </div>)
   }
 }

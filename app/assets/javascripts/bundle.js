@@ -107,9 +107,9 @@ var receiveCustomer = function receiveCustomer(payload) {
     payload: payload
   };
 };
-var fetchCustomer = function fetchCustomer(id) {
+var fetchCustomer = function fetchCustomer(id, month) {
   return function (dispatch) {
-    return _util_customer_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchCustomer"](id).then(function (customer) {
+    return _util_customer_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchCustomer"](id, month).then(function (customer) {
       dispatch(receiveCustomer(customer));
     });
   };
@@ -259,53 +259,60 @@ function (_React$Component) {
       name: '',
       activated_on: '',
       deactivated_on: '',
-      month: '2019-01-01'
+      month: '',
+      bill: 0
     };
     _this.handleDelete = _this.handleDelete.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.billFor = _this.billFor.bind(_assertThisInitialized(_this));
+    _this.handleMonth = _this.handleMonth.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(CustomerPage, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchCustomer(this.props.match.params.customerId);
+      var _this2 = this;
+
+      this.props.fetchCustomer(this.props.match.params.customerId).then(function () {
+        _this2.setState({
+          bill: _this2.billFor(_this2.props.month, _this2.props.sub_plan, _this2.props.users)
+        });
+      });
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      if (!prevProps.users) return;
-
-      if (prevProps.users.length != this.props.users.length) {
-        this.props.fetchCustomer(this.props.match.params.customerId);
-      } // window.scrollTo(0, 0);
-
+    value: function componentDidUpdate(newProps) {
+      if (this.props.users != newProps.users) {
+        this.setState({
+          bill: this.billFor(this.props.month, this.props.sub_plan, this.props.users)
+        });
+      }
     }
   }, {
     key: "handleDelete",
     value: function handleDelete(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       var user_id = e.currentTarget.id;
       var customer_id = this.props.customer.id;
       this.props.deleteUser(user_id).then(function () {
-        _this2.props.fetchCustomer(customer_id);
+        _this3.props.fetchCustomer(customer_id);
       });
     }
   }, {
     key: "update",
     value: function update(property) {
-      var _this3 = this;
+      var _this4 = this;
 
       return function (e) {
-        return _this3.setState(_defineProperty({}, property, e.target.value));
+        return _this4.setState(_defineProperty({}, property, e.target.value));
       };
     }
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      var _this4 = this;
+      var _this5 = this;
 
       e.preventDefault();
       var user = Object.assign({}, this.state);
@@ -318,8 +325,15 @@ function (_React$Component) {
       formData.append('user[deactivated_on]', deactivated_on);
       formData.append('user[customer_id', this.props.customer.id);
       this.props.createUser(formData).then(function () {
-        _this4.props.fetchCustomer(_this4.props.customer.id);
+        _this5.props.fetchCustomer(_this5.props.customer.id, _this5.state.month);
       });
+    }
+  }, {
+    key: "handleMonth",
+    value: function handleMonth() {
+      var month = this.state.month;
+      var customer_id = this.props.customer.id;
+      this.props.fetchCustomer(customer_id, month);
     }
   }, {
     key: "billFor",
@@ -336,20 +350,17 @@ function (_React$Component) {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
       }
 
-      month = month += "-02"; // debugger
-
-      var oneDay = 24 * 60 * 60 * 1000;
+      month = month += "-02";
+      var oneDay = 86400000;
       var firstDate = firstDayOfMonth(new Date(month));
       var lastDate = lastDayOfMonth(new Date(month));
-      var numDaysInMonth = (lastDate - firstDate) / oneDay + 1;
-      var dailyRate = activeSubscription.monthly_price_in_dollars / numDaysInMonth; // debugger
-
+      var numDaysInMonth = Math.floor((lastDate - firstDate) / oneDay) + 1;
+      var dailyRate = activeSubscription.monthly_price_in_dollars ? activeSubscription.monthly_price_in_dollars / numDaysInMonth : 0;
       var totalBill = 0;
       var date = firstDate;
 
       while (date <= lastDate) {
         users.forEach(function (user) {
-          // debugger
           if (new Date(user.activated_on) <= date && (user.deactivated_on == null || new Date(user.deactivated_on) > date)) {
             totalBill += dailyRate;
           }
@@ -362,20 +373,31 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (!this.props.customer) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       var _this$state = this.state,
           name = _this$state.name,
           activated_on = _this$state.activated_on,
-          deactivated_on = _this$state.deactivated_on;
+          deactivated_on = _this$state.deactivated_on,
+          month = _this$state.month;
       var _this$props = this.props,
           customer = _this$props.customer,
           users = _this$props.users,
           subscription = _this$props.subscription,
-          sub_plan = _this$props.sub_plan,
-          month = _this$props.month;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Subscription Plan: ", sub_plan.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Users for ", this.props.customer.name), this.props.users.map(function (user, i) {
+          sub_plan = _this$props.sub_plan;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Subscription Plan: ", sub_plan.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Active users for ", this.props.customer.name, " during ", month ? month : '2019-01'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleMonth
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Change month: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: month,
+        onChange: this.update('month'),
+        placeholder: "ex: 2019-02"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        value: "Change month:",
+        className: "create-button"
+      })), this.props.users.map(function (user, i) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           key: i,
           className: "user-section"
@@ -388,9 +410,9 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Deactivated on: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.deactivated_on || 'Still Active')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "delete-button",
           id: user.id,
-          onClick: _this5.handleDelete
+          onClick: _this6.handleDelete
         }, "Delete User"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "TOTAL BILL = $", this.billFor(month, sub_plan, users)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Add more users (this may change total Bill, depending on new users' dates):"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "TOTAL BILL = $", this.state.bill), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Add more users (this may change total Bill, depending on new users' dates):"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "new-user-form",
         onSubmit: this.handleSubmit
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Name: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -409,8 +431,7 @@ function (_React$Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: "Create New User",
-        className: "create-button" // className="create-submit-button"
-
+        className: "create-button"
       }))));
     }
   }]);
@@ -438,12 +459,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // import * as APIUtil from '../util/user_api_util';
+
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-  // debugger
-  // let customer = state.data[ownProps.match.params.customerId];
-  // let customer = state.data.customer;
   return {
     customer: state.data.customer,
     users: state.data.users,
@@ -455,10 +473,9 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 
 var mapDispatchToProps = function mapDispatchToProps(ownProps) {
   return function (dispatch) {
-    // const promise = new Promise((resolve) => { this.props.closeModal(); resolve(); });
     return {
-      fetchCustomer: function fetchCustomer(id) {
-        return dispatch(Object(_actions_customer_actions__WEBPACK_IMPORTED_MODULE_2__["fetchCustomer"])(id));
+      fetchCustomer: function fetchCustomer(id, month) {
+        return dispatch(Object(_actions_customer_actions__WEBPACK_IMPORTED_MODULE_2__["fetchCustomer"])(id, month));
       },
       deleteUser: function deleteUser(id) {
         return Object(_actions_user_actions__WEBPACK_IMPORTED_MODULE_3__["deleteUser"])(id);
@@ -621,14 +638,12 @@ var customersReducer = function customersReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
-  var customer;
+  var data;
 
   switch (action.type) {
     case _actions_customer_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_CUSTOMER"]:
-      // debugger
-      customer = action.payload; // return merge({}, state, { [customer.id]: customer });
-
-      return action.payload;
+      data = action.payload;
+      return data;
 
     default:
       return state;
@@ -703,10 +718,13 @@ var configureStore = function configureStore() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchCustomer", function() { return fetchCustomer; });
-var fetchCustomer = function fetchCustomer(id) {
+var fetchCustomer = function fetchCustomer(id, month) {
   return $.ajax({
     method: 'GET',
-    url: "api/customers/".concat(id)
+    url: "api/customers/".concat(id),
+    data: {
+      month: month ? month : '2019-01'
+    }
   });
 };
 
